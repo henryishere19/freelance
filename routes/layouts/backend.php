@@ -60,7 +60,10 @@ Route::group(['middleware' => ['auth'],'prefix' => 'backend','namespace' => 'Bac
 	Route::post('change-service-status', [ServiceController::class,'change_status'])->name('ajax.service.change.status');
 	Route::post('delete-service', [ServiceController::class,'destroy'])->name('ajax.service.delete');
 	Route::post('get-posts-category-list', [PostController::class, 'categoryList'])->name('ajax.post.category.list');
+	
+	//Service Position Order
 	Route::post('service-order-list', [ServiceController::class, 'serviceOrderList'])->name('ajax.post.service.order.list');
+	
 	// Users (Roles Wise Management)
 	Route::get('manage/{role}', [UserManagementController::class,'index'])->name('user.list');
 	Route::get('manage/{role}/add', [UserManagementController::class,'create'])->name('user.management.add');

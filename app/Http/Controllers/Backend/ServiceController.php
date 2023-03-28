@@ -126,18 +126,19 @@ class ServiceController extends CommonController
 		}
 	}
 
+	//Serice Order Position
 	public function serviceOrderList(Request $request){
-		$a = 1;
+		$i = 1;
 		foreach($request->order as $key => $val){
-			// dd($val);
 			if(!empty($val['id'])){
 				$data = Service::find($val['id']);
-				$data->item_position = $a;
+				$data->item_position = $i;
 				$data->save();
-				$a++;
+				$i++;
 			}
 		}
-		return [''];
+		return response()->json(['success' => true]);
+		// return json_response(['success' => true]);
 	}
 	
 	// STORE
