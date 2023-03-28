@@ -70,7 +70,9 @@
 						<thead>
 							<tr class="fw-bolder text-muted">
 								<th class="min-w-30px"> Sl No</th>
-								<th class="min-w-200px">Title</th>
+								<th class="min-w-30px"> Home Page Title </th>
+								
+								<!-- <th class="min-w-200px">Title</th> -->
 								<th class="min-w-80px">Image</th>
 								<th class="min-w-80px">Created at</th>
 								<th class="min-w-80px">Status</th>
@@ -123,7 +125,9 @@
                 //     }
                 // },
 				{data: 'item_position', name: 'item_position'},
-				{data: 'content_title_main', name: 'content_title_main'},
+				{data: 'home_page_title', name: 'home_page_title'},
+				
+				// {data: 'content_title_main', name: 'content_title_main'},
 				{data: 'image', name: 'image'},
 				{data: 'created_at', name: 'created_at'},
 				{data: 'status', name: 'status'},

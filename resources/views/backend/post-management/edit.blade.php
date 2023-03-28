@@ -153,6 +153,17 @@
 											<input type="text" class="form-control mb-2" id="title" placeholder="Enter title" value="{{ $data->title }}"/>
 											<div class="text-muted fs-7">A {{$post_type}} name is required and recommended to be unique.</div>
 										</div>
+										@if(!empty($services))
+										<div>
+											<label class="form-label">Service</label>
+											<select class="form-select mb-2" id="service" data-control="select2" data-placeholder="Select an option" data-allow-clear="true">
+												@foreach($services as $key => $val)
+													<option value="{{$val->id}}">{{$val->slug}}</option>
+												@endforeach
+											</select>
+											<!-- <div class="text-muted fs-7">Set a description for better visibility.</div> -->
+										</div>
+										@endif
 										<div>
 											<label class="form-label">Slug</label>
 											<input type="text" disabled class="form-control mb-2" id="slug" placeholder="Enter slug" value="{{ $data->slug }}"/>
@@ -210,7 +221,7 @@
 						</div>
 					</div>
 					<div class="d-flex justify-content-end">
-						<a href="{{ route('products.index') }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+						<a href="{{ ($post_type) ? route('page.post.management',$post_type) : route('products.index') }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
 						<button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
 							<span class="indicator-label">Publish Changes</span>
 							<span class="indicator-progress">Please wait...
@@ -278,6 +289,7 @@
 		data.append('page_title', $('#page_title').val());
 		data.append('seo_keywords', $('#seo_keywords').val());
 		data.append('seo_description', $('#seo_description').val());
+		data.append('service', $('#service').val());
 		var response = adminAjax('{{route("ajax.post.store")}}', data);
 		if(response.status == '200'){
 			swal.fire({ type: 'success', title: response.message, showConfirmButton: false, timer: 1500 });

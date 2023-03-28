@@ -68,8 +68,8 @@ class HomeController extends CommonController
         $slider = Slider::where(['slug'=>"Home",'status'=>"active"])->first();
         $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)
         ->get();
-        $servicenew = Service::where(['status'=>"active"])->orderBy('priority')->limit(8)->get();
-        $service = Service::where(['status'=>"active"])->orderBy('priority')->whereNotIn('slug',['life-at'])->limit(3)->get();
+        $servicenew = Service::where(['status'=>"active"])->orderBy('priority')->limit(8)->orderBy('item_position','ASC')->get();
+        $service = Service::where(['status'=>"active"])->orderBy('priority')->whereNotIn('slug',['life-at'])->limit(3)->orderBy('item_position','ASC')->get();
         $aras = [];
         foreach($service as $ser)
         {

@@ -662,7 +662,7 @@
 						</div>
 					</div>
 					<div class="d-flex justify-content-end">
-						<a href="{{ route('products.index') }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
+						<a href="{{ route('page.service.management',$post_type) }}" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a>
 						<button type="submit" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
 							<span class="indicator-label">Publish Changes</span>
 							<span class="indicator-progress">Please wait...

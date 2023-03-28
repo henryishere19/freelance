@@ -12,6 +12,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Helpers\CommonHelper;
 use App\Models\Post;
 use App\Models\Category;
+use App\Models\Service;
 use Yajra\DataTables\DataTables;
 class PostController extends CommonController
 {   
@@ -119,10 +120,11 @@ class PostController extends CommonController
 	// DETAILS PAGE
 	public function show($post_type = null, $id = ''){
 		try {
+			$services = Service::where('slug','!=','')->get();
 			$page_title = 'Edit '. $post_type;
 			$data 		= Post::where('id',$id)->first();
 			if($data){
-				return view("backend.post-management.edit", compact(['page_title','data', 'post_type']));
+				return view("backend.post-management.edit", compact(['page_title','data', 'post_type','services']));
 			}
 			return redirect()->route('homePage');
 		} catch (Exception $e) {
@@ -137,6 +139,7 @@ class PostController extends CommonController
 			'post_type'		=> 'required',
 			'title'			=> 'required|min:3|max:99',
 			'status'		=> 'required',
+			'service'   => 'required',
 		]);
 		if($validator->fails()){
 			$this->ajaxValidationError($validator->errors(), trans('common.error'));
@@ -165,6 +168,7 @@ class PostController extends CommonController
 				'page_title'	=> $request->page_title,
 				
 				'status' 				=> $request->status,
+				'services_id' => $request->service
 			];
 			
 			// MEDIA UPLOAD
