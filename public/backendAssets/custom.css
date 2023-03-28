@@ -1,0 +1,72 @@
+.max-w-10px{max-width:10px;}
+.max-w-20px{max-width:20px;}
+.max-w-30px{max-width:30px;}
+.max-w-40px{max-width:40px;}
+.max-w-50px{max-width:50px;}
+.max-w-60px{max-width:60px;}
+.max-w-70px{max-width:70px;}
+.max-w-80px{max-width:80px;}
+.max-w-90px{max-width:90px;}
+.display-none{display:none;}
+.validation-div{color:red;}
+.user-img{height: 50px!important; width: 50px!important;}
+.image-preview{padding: 10px 2px; max-width: 225px; max-height: 225px;}
+.swal2-popup{font-size: 15px!important;}
+.text-theme{color: #f0bb22 !important;}
+.btn-theme{background: #f0b922; border-color: #f0b922;}
+.btn-theme:hover {background-color: #f1c43a; border-color: #f1c43a;}
+.widget-chart .widget-numbers{font-size: 2.1rem;}
+.fade:not(.show){opacity: 10;}
+.qr-code-box{padding:100px;}
+.nav-order-count{display:none;}
+.logo-hdr img{max-height: 45px; max-width: 560px;}
+.form-control.form-control-solid {border-color: #d7d1d1;}
+.form-select.form-select-solid {border-color: #d7d1d1;}
+.image-input.image-input-outline .image-input-wrapper {border: 3px solid #dcd8d8;}
+.order-box{min-width: 290px;}
+.gallery-img {float: left; border: 1px solid #adadad; border-radius: 7px;}
+.gallery-img img{height: 80px; border-radius: 7px; width: 80px;}
+.dropzone.active{border: 1px solid#009ef7; background: #009ef730;}
+#offer-price-box{display:none;}
+
+/*--------------------------------------------------------------
+# Dashboard CSS
+--------------------------------------------------------------*/
+.overlay .overlay-layer{
+	top: 16% !important;
+}
+
+.card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center!important;
+    flex-wrap: wrap;
+    min-height: 70px;
+    padding: 0 2.25rem;
+    background-color: transparent;
+    border-bottom: 1px solid #eff2f5;
+}
+
+.card-header-title {
+    font-size: 22px;
+}
+
+.position-relative.form-group {
+    margin-bottom: 20px;
+}
+
+.appendrows {
+    margin-bottom: 10px;
+}
+
+.form-control.form-control-solid {
+    margin-right: 10px;
+}
+
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #fff !important;
+    border: unset!important;
+    background-color: unset!important;
+    
+}

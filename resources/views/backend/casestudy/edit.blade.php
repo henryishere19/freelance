@@ -1,0 +1,253 @@
+@extends('layouts.backend.master')
+
+@section('toolbar')
+	<div class="toolbar" id="kt_toolbar">
+		<div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
+			<div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
+				<h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Case Study</h1>
+				<span class="h-20px border-gray-300 border-start mx-4"></span>
+				<ul class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
+					<li class="breadcrumb-item text-muted"><a href="{{ route('dashboard') }}" class="text-muted text-hover-primary">Dashboard</a></li>
+					
+					<li class="breadcrumb-item"><span class="bullet bg-gray-300 w-5px h-2px"></span></li>
+					<li class="breadcrumb-item text-muted"><a href="{{ route('casestudy.index') }}" class="text-muted text-hover-primary">Case Study</a></li>
+					
+					<li class="breadcrumb-item"><span class="bullet bg-gray-300 w-5px h-2px"></span></li>
+					<li class="breadcrumb-item text-dark">Edit</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+@endsection
+
+@section('content')
+		<div id="kt_content_container" class="container-xxl">
+			<div class="card card-flush h-lg-100" id="kt_contacts_main">
+				<div class="card-body pt-5">
+					<form id="kt_ecommerce_settings_general_form" class="form" action="javascript:void(0);" onsubmit="saveData()";>
+						<div class="row">
+							<div class="col col col-md-4">
+								<div class="fv-row mb-7">
+									<label class="fs-6 fw-bold form-label mt-3">
+										<span class="required">Title</span>
+										<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Enter the title here."></i>
+									</label>
+									<input type="text" class="form-control form-control-solid" id="title" value="{{$data->title}}"/>
+									<div class="validation-div" id="val-title"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="position-relative form-group">
+									<label for="description" class="">Description</label>
+									<textarea id="description"  rows="4" class="form-control"></textarea>
+									<div class="validation-div" id="val-description"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card card-flush py-4">
+									<div class="card-header" style="padding: 0px;">
+										<div class="card-title"><h2> Images</h2></div>
+										<input type="file" id="image" class="form-control">
+										<img id="image-src" src="{{asset($data->image)}}" height="120"width="120px">
+										<div class="validation-div" id="val-image"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card card-flush py-4">
+									<div class="card-header" style="padding: 0px;">
+										<div class="card-title"><h2> FIle</h2></div>
+										<input type="file" id="fileupload" class="form-control">
+										<div class="validation-div" id="val-fileupload"></div>
+									</div>
+								</div>
+							</div>
+							<!-- <div class="col-md-6 pagelink">
+								<div class="card card-flush py-4">
+									<div class="card-title"><h2>Service Link</h2></div>
+									<select id="pageselectss" class="form-control">
+										<option value="">Select Service</option>
+										@foreach($service as $ser)
+										<?php $url = url('/').'/'.$ser->slug; ?>
+											<option value="{{url('/')}}/{{$ser->slug}}">{{$ser->title}}</option>
+										@endforeach
+										<option value="page" @if($data->page == "service") selected  @endif>Service</option>
+										<option value="other"  @if($data->page == "other") selected  @endif>Other</option>
+									</select>
+									<div class="validation-div" id="val-pageselectss"></div>
+								</div>
+							</div> -->
+							<!-- <div class="col-md-6 linkcustome">
+								<div class="card card-flush py-4">
+									<div class="card-title"><h2> Link</h2></div>
+									<input type="text" id="customelink" value="{{ $data->link}}" name="customelink" class="form-control">
+									<div class="validation-div" id="val-link"></div>
+								</div>
+							</div> -->
+						</div>
+						<div class="row row-cols-1 row-cols-sm-2 rol-cols-md-3 row-cols-lg-5">
+							<div class="col">
+								<div class="fv-row mb-7">
+									<label class="fs-6 fw-bold form-label mt-3"><span class="required">Status</span></label>
+									<div class="w-100">
+										<div class="form-floating border rounded">
+											<select id="status" class="form-select form-select-solid lh-1 py-3">
+												<option value="active" @if($data->status == 'active') selected @endif>{{trans('common.active')}}</option>
+												<option value="inactive" @if($data->status == 'inactive') selected @endif>{{trans('common.inactive')}}</option>
+											</select>
+											<div class="validation-div" id="val-status"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="separator mb-6"></div>
+						<div class="d-flex justify-content-end">
+							<a class="btn btn-light me-3" href="{{route('company.index')}}">Cancel</a>
+							<button type="submit" data-kt-contacts-type="submit" class="btn btn-primary">
+								<span class="indicator-label">Save</span>
+								<span class="indicator-progress">Please wait...
+								<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+@endsection
+
+@section('js')
+<script src="https://cdn.tiny.cloud/1/344q5fi5mjmf6trdrw5naubzza7s17jt9k57e6s09dlpbl1u/tinymce/5/tinymce.min.js"></script>
+
+<script>
+	tinymce.init({
+		selector: '#description',
+		plugins: 'code table image paste',
+		toolbar: 'undo redo | table image alignleft aligncenter alignright alignjustify code',
+		toolbar_drawer: 'floating',
+		tinycomments_mode: 'embedded',
+		height : '580',
+		oninit : 'setPlainText',
+		images_upload_handler: function (blobInfo, success, failure) {
+			var xhr, formData;
+			xhr = new XMLHttpRequest();
+			xhr.withCredentials = false;
+			xhr.open('POST', 'adminApis/save_media');
+			xhr.onload = function() {
+				var json;
+				if (xhr.status != 200) {
+					failure('HTTP Error: ' + xhr.status);
+					return;
+				}
+			
+				json = JSON.parse(xhr.responseText);
+			
+				if (!json || typeof json.details != 'string') {
+					failure('Invalid JSON: ' + xhr.responseText);
+					return;
+				}
+				//success('https://www.codefencers.com/media/' + json.details);
+			};
+			formData = new FormData();
+			formData.append('media', blobInfo.blob(), blobInfo.filename());
+			xhr.send(formData);
+		},
+	});
+	$("#image").change(function() {
+			readURL(this);
+		});
+	// CREATE
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				jQuery('#image-src').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	function saveData(){
+		var data = new FormData();
+		data.append('item_id', '{{$data->id}}');
+		data.append('title', $('#title').val());
+		data.append('type', $('#pageselect option:selected').val());
+		data.append('link', $('#pageselectss option:selected').val());
+		data.append('page_for', $('#pagefor option:selected').val());
+		data.append('image', jQuery('#image')[0].files[0]);
+		data.append('fileupload', jQuery('#fileupload')[0].files[0]);
+		data.append('description', $('#description').val());
+		data.append('links', $('#customelink').val());
+		data.append('status', $('#status').val());
+		var response = adminAjax('{{route("ajax.store.casestudy")}}', data);
+		if(response.status == '200'){
+			swal.fire({ type: 'success', title: response.message, showConfirmButton: false, timer: 1500 });
+			setTimeout(function(){ location.reload(); }, 2000);
+		}else if(response.status == '422'){
+			$('.validation-div').text('');
+			$.each(response.error, function( index, value ) {
+				$('#val-'+index).text(value);
+			});
+			
+		} else if(response.status == '201'){
+			swal.fire({title: response.message,type: 'error'});
+		}
+	}
+	</script>
+	@if($data->type == "cusomlink")
+		<script>
+		$('.linkcustome').show();
+		</script>
+		@else
+	<script>
+		$('.linkcustome').hide();
+	</script>
+	@endif
+	@if($data->type == "page")
+		<script>
+		$('.pagelink').show();
+		</script>
+	@else
+	<script>
+		$('.pagelink').hide();
+	</script>
+	@endif
+	<script>
+	// $('.pagelink').hide();
+	$('#pageselect').on('change',function(){
+		if($(this).val() == "cusomlink")
+		{
+			$('.linkcustome').show();
+			$('.pagelink').hide();
+		}
+		else if($(this).val() == "page"){
+			$('.pagelink').show();
+			$('.linkcustome').hide();
+		}
+		else{
+			$('.linkcustome').hide();
+	$('.pagelink').hide();
+		}
+		console.log();
+	})
+	// Save File
+	function saveFile(){
+		var data = new FormData();
+		data.append('item_id', '{{$data->id}}');
+		data.append('file', file);
+		var response = adminAjax('{{route("ajax.product.save.gallery")}}', data);
+		if(response.status == '200'){
+			swal.fire({ type: 'success', title: response.message, showConfirmButton: false, timer: 1500 });
+			if(response.data.media){
+				$('#gallery-list').append('<div class="gallery-img me-3 mt-5"><img src="'+ response.data.media +'" class="" alt=""></div>');
+			}
+		}else if(response.status == '201'){
+			swal.fire({title: response.message,type: 'error'});
+		}
+	}
+</script>
+@endsection

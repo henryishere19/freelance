@@ -1,0 +1,478 @@
+/* iPad Air & Pro */
+@media screen and (max-width: 1199.98px) {
+
+  h2 {
+    font-size: 30px !important;
+  }
+
+  .intuitive-insights-content{
+    min-height: 450px;
+  }
+
+  #hero {
+    height: 40vh;
+  }
+
+  .content-text h1 {
+    font-size: 30px;
+    line-height: 30px;
+  }
+
+  .hero-slider .slick-dots {
+    left: 5%;
+    bottom: 5%;
+    right: unset;
+  }
+
+  .helping-businesses-content {
+    padding-left: 4%;
+  }
+
+  .accolades-that-reflect .icon-box {
+    padding: 10px;
+  }
+
+  .intuitive-superpowers .member .member-info p {
+    font-size: 22px;
+    line-height: 35px;
+  }
+
+  .client-logo img {
+    height: 70px;
+  }
+
+  .trusted-partners h2 {
+    margin-bottom: 60px;
+  }
+
+  .trusted-partners-slider .slick-arrow {
+    top: -70%;
+  }
+
+  .miss-our-latest .submit-button {
+    right: 5%;
+    top: 14%;
+  }
+
+  .ready-to-disrupt h2 {
+    line-height: 45px;
+  }
+
+  #footer {
+    padding: 50px 0 20px 0;
+  }
+
+  .our-team-box {
+    max-height: 80%;
+  }
+
+  .main-banner-content {
+    top: 25%;
+  }
+
+  .banner-text h1 {
+    font-size: 40px;
+  }
+
+  .banner-text p {
+    font-size: 20px;
+    line-height: 30px;
+  }
+
+  .listen-to-stories .our-team-slider .slick-next {
+    top: -15%;
+  }
+
+  .happy-team-slider .slick-arrow {
+    top: -4%;
+  }
+
+  .devsecops-innovations .icon-box {
+    padding: 15px;
+  }
+
+  .devsecops-innovations .title {
+    font-size: 20px;
+  }
+
+  .high-impact-main-box {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  .high-impact-main-box p {
+    font-size: 14px;
+  }
+
+  #tearms-condition .section-title h2 {
+    font-size: 40px!important;
+  }
+}
+
+/* iPad Mini */
+@media screen and (max-width: 991.98px) {
+
+  #hero {
+    height: 50vh;
+  }
+
+  .hero-content {
+    top: 15%;
+  }
+
+  .content-text h1 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .content-text p {
+    font-size: 20px;
+  }
+
+  .helping-businesses h2 {
+    font-size: 23px !important;
+  }
+
+  .helping-businesses p {
+    font-size: 12px;
+  }
+
+  #globally-recognized {
+    padding: 50px 0;
+  }
+
+  .client-logo ul li {
+    padding: 15px 25px;
+  }
+
+  .client-logo img {
+    height: 30px;
+  }
+
+  .we-believe-that-content p {
+    padding: 0;
+  }
+
+  .we-believe-that-content a {
+    margin: 10px 0;
+  }
+
+  .social-icon ul {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .intuitive-superpowers .section-title {
+    margin-bottom: 20px;
+  }
+
+  .intuitive-insights h2 {
+    margin-bottom: 20px;
+  }
+
+  .footer-logo img {
+    height: 80px;
+  }
+
+  .banner-text h1 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  .main-banner-content {
+    top: 35%;
+  }
+
+  .the-intuitive-life p.heading {
+    font-size: 30px;
+  }
+
+  .the-intuitive-life p {
+    font-size: 18px;
+  }
+
+  #what-to-do {
+    padding: 50px 0;
+  }
+
+  .happy-team-slider .slick-arrow {
+    top: -5%;
+  }
+
+  .listen-to-stories .our-team-slider .slick-next {
+    top: -10%;
+  }
+
+  .our-team-box {
+    max-height: 90%;
+  }
+
+  .high-impact-main-box {
+    min-height: 400px;
+  }
+
+  .high-impact-main-box h3 {
+    font-size: 22px;
+  }
+
+  .high-impact-main-box p {
+    font-size: 11px;
+  }
+
+  #DevSecOps .icon-box {
+    padding: 10px;
+  }
+
+  .migration-service-main-box {
+    margin: 10px;
+  }
+
+  .migration-innovations-content h3 {
+    font-size: 24px;
+  }
+
+  .unlock-value .icon-box {
+    padding: 10px;
+  }
+
+  #tearms-condition .section-title h2 {
+    font-size: 40px!important;
+    margin-bottom: 40px;
+  }
+}
+
+@media all and (device-width: 1024px) and (device-height: 768px) and (orientation:landscape) {
+  #hero {
+    height: 70vh;
+  }
+}
+
+/* Mobile */
+@media screen and (max-width: 767.98px) {
+
+  #hero {
+    height: 70vh;
+  }
+
+  .hero-content {
+    top: 0%;
+  }
+
+  .content-text h1 {
+    font-size: 22px;
+  }
+
+  .content-text p {
+    font-size: 16px;
+  }
+
+  .hero-slider .slick-dots {
+    left: 0;
+    right: 0;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #header.fixed-top {
+    height: 60px;
+    padding: 15px;
+  }
+
+  .content-text h1 {
+    font-size: 25px;
+    line-height: 30px;
+  }
+
+  h2 {
+    font-size: 25px !important;
+  }
+
+  #globally-recognized {
+    padding: 30px 0;
+  }
+
+  #accolades-that-reflect {
+    padding: 30px 0;
+  }
+
+  #intuitive-superpowers {
+    padding: 30px 0;
+  }
+
+  #collaborate {
+    padding: 30px 0;
+  }
+
+  #we-believe-that {
+    padding: 50px 0;
+  }
+
+  #intuitive-insights {
+    padding: 50px 0;
+  }
+
+  #trusted-partners {
+    padding: 50px 0;
+  }
+
+  #miss-our-latest {
+    padding: 50px 0;
+  }
+
+  #ready-to-disrupt {
+    padding: 50px 0;
+  }
+
+  .ready-to-disrupt h2 {
+    line-height: 30px;
+  }
+
+  .globally-recognized-img video {
+    height: auto;
+  }
+
+  .accolades-that-reflect .icon-box {
+    width: 100%;
+    padding: 30px;
+    min-height: 156px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background: #000000a1;
+    color: #fff;
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
+  }
+
+  .trusted-partners-slider .slick-arrow {
+    top: -20%;
+    right: 5%;
+    width: 30px;
+  }
+
+  .ready-to-disrupt p {
+    font-size: 20px;
+  }
+
+  .ready-to-disrupt p bold {
+    font-size: 25px;
+  }
+
+  #helping-businesses {
+    height: unset;
+  }
+
+  .helping-businesses-video-mobile video {
+    width: 100%;
+  }
+
+  .helping-businesses-content {
+    position: unset;
+    padding: 4%;
+  }
+
+  .happy-team-slider .slick-arrow {
+    top: 100%;
+    margin: 0 auto;
+    left: 0;
+  }
+
+  .happy-team-slider .item.slick-slide {
+    height: auto;
+  }
+
+  .happy-team-slider .slick-slide:after {
+    background: transparent;
+  }
+
+  .happy-team-slider .slick-active {
+    transform: scale(0.8) translate(0);
+  }
+
+  .happy-team-slider .slick-arrow img {
+    width: 30px;
+  }
+
+  .banner-text h1 {
+    font-size: 25px;
+    line-height: 35px;
+  }
+
+  .banner-text p {
+    font-size: 17px;
+  }
+
+  .banner-text {
+    top: 5%;
+    position: absolute;
+  }
+
+  .our-team-box {
+    background-color: #171717;
+    padding: 50px 20px 20px 20px;
+  }
+
+  .listen-to-stories .our-team-slider .slick-next {
+    top: 0;
+    width: 30px;
+    right: 3%;
+  }
+
+  .high-impact-main-box {
+    min-height: 300px;
+  }
+
+  .high-impact-main-box h3 {
+    font-size: 32px;
+  }
+
+  .high-impact-main-box p {
+    font-size: 14px;
+  }
+
+  .high-impact-main-box::before {
+    display: none;
+  }
+
+  .cloud-infosec-content p {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  .we-deliver-main-box h3 {
+    font-size: 30px;
+    min-height: auto;
+  }
+
+  .the-intuitive h2 {
+    width: 100%;
+  }
+
+  .the-intuitive .title {
+    font-size: 25px;
+    min-height: auto;
+  }
+
+  .our-differentiators h2 {
+    width: 100%;
+  }
+  .what-to-do a.know-more {
+    font-size: 15px;
+    margin-left: 15px;
+  }
+
+  .migration-service-main-box::before {
+    display: none;
+  }
+
+  #tearms-condition {
+    padding: 80px 0 60px 0;
+  }
+
+  .career-details h4 {
+    margin-bottom: 20px;
+  }
+}
