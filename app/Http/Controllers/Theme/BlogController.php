@@ -107,11 +107,12 @@ class BlogController extends CommonController
 			$page_main_title = $data->page_title;
 			
 			$blog = Post::where(['status'=>"active"])
-					->whereIn('services_id',function($query){
-						$query->select('id')
-						->from('service')
-						->whereRaw('service.id = posts.services_id');
-					})
+					// ->whereIn('services_id',function($query){
+					// 	$query->select('id')
+					// 	->from('service')
+					// 	->whereRaw('service.id = posts.services_id');
+					// })
+					->where('services_id',$data->id)
 					->inRandomOrder()->limit(5)->get();
 
 			if($slug == "digital-workspace")
