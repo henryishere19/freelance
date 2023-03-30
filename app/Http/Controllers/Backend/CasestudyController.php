@@ -124,9 +124,12 @@ class CasestudyController extends CommonController
 		$validationRule = [
 			'title'       		=> 'required|min:3|max:99',
 			'status'			=> 'required',
-			'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:1024',
+			'image' => 'sometimes|image|mimes:jpeg,png,jpg',
 			'select_content_or_blog' => 'required',
-			'service' => 'required'
+			'service' => 'required',
+			'short_description' => 'required',
+			'post_author' => 'required',
+			'image_header' => 'sometimes|image|mimes:jpeg,png,jpg'
 		];
 		if($request->select_content_or_blog == 'file'){
 			$validationRule['fileupload'] = 'required|mimes:pdf,xlx,csv|max:2048';
@@ -144,9 +147,12 @@ class CasestudyController extends CommonController
 				'show_content' => $request->select_content_or_blog,
 				'services_id' => $request->service,
 				'post_date' => $request->post_date??null,
-				'user_id' => Auth::user()->id
+				'user_id' => Auth::user()->id,
+				'short_description' =>$request->short_description,
+				'post_author' =>$request->post_author,
+				'image_header' => $this->saveMedia($request->file('image_header'))
 			];
-			
+
 			if($data['show_content'] == 'file' && $request->fileupload != 'undefined'){
 				$validator = Validator::make($request->all(), [
 					'fileupload' => 'required|mimes:pdf,xlx,csv|max:2048',
@@ -176,7 +182,9 @@ class CasestudyController extends CommonController
 			'status'			=> 'required',
 			'select_content_or_blog' => 'required',
 			'service' => 'required',
-			'item_id' => 'required'
+			'item_id' => 'required',
+			'short_description' => 'required',
+			'post_author' => 'required',
 		];
 		if($request->select_content_or_blog == 'file' && $request->fileupload != 'undefined'){
 			$validationRule['fileupload'] = 'required|mimes:pdf,xlx,csv|max:2048';
@@ -198,11 +206,16 @@ class CasestudyController extends CommonController
 				'show_content' => $request->select_content_or_blog,
 				'services_id' => $request->service,
 				'post_date' => $request->post_date??null,
-				'user_id' => Auth::user()->id
+				'user_id' => Auth::user()->id,
+				'short_description' =>$request->short_description,
+				'post_author' =>$request->post_author
 			];
 
 			if($request->image != 'undefined'){
 				$data['image'] =  $this->saveMedia($request->file('image'));
+			}
+			if($request->image_header != 'undefined'){
+				$data['image_header'] =  $this->saveMedia($request->file('image_header'));
 			}
 			
 			// dd($request->fileupload);

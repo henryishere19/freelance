@@ -37,7 +37,15 @@
 								</div>
 							</div>
 						</div>
-						
+						<div class="row blogDiv">
+							<div class="col-md-12">
+								<div class="position-relative form-group">
+									<label for="short_description" class=""> Short Description</label>
+									<textarea id="short_description"  rows="4" class="form-control">{{$data->short_description}}</textarea>
+									<div class="validation-div" id="val-short_description"></div>
+								</div>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<label class="form-label">Select Showing Content</label>
@@ -63,7 +71,7 @@
 							<div class="col-md-12">
 								<div class="position-relative form-group">
 									<label for="description" class="">Description</label>
-									<textarea id="description"  rows="4" class="form-control">{{$data->description}}</textarea>
+									<textarea id="description"  rows="4" class="form-control">{{ $data->description }}</textarea>
 									<div class="validation-div" id="val-description"></div>
 								</div>
 							</div>
@@ -95,6 +103,27 @@
 									<div class="card-header" style="padding: 0px;">
 										<div class="card-title"><h2> Post Date</h2></div>
 										<input type="date" value="{{$data->post_date}}" id="post_date" class="form-control">
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class="card card-flush py-4">
+									<div class="card-header" style="padding: 0px;">
+										<div class="card-title"><h2> Header Images</h2></div>
+										<input type="file" id="image_header" class="form-control">
+										<img id="image-src-header" src="{{asset($data->image_header)}}" height="120"width="120px">
+										<div class="validation-div" id="val-image_header"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="card card-flush py-4">
+									<div class="card-header" style="padding: 0px;">
+										<div class="card-title"><h2> Post Author</h2></div>
+										<input type="text" id="post_author" value="{{$data->post_author}}" class="form-control">
+										<div class="validation-div" id="val-post_author"></div>
 									</div>
 								</div>
 							</div>
@@ -137,8 +166,9 @@
 <script>
 	tinymce.init({
 		selector: '#description',
-		plugins: 'code table image paste',
-		toolbar: 'undo redo | table image alignleft aligncenter alignright alignjustify code',
+		plugins: 'save code table image paste',
+		toolbar: 'save undo redo | table image alignleft aligncenter alignright alignjustify code',
+		save_enablewhendirty: true,
 		toolbar_drawer: 'floating',
 		tinycomments_mode: 'embedded',
 		height : '580',
@@ -167,9 +197,28 @@
 			formData.append('media', blobInfo.blob(), blobInfo.filename());
 			xhr.send(formData);
 		},
+		init_instance_callback : function(editor) {
+			var freeTiny = document.querySelector('.tox .tox-notification--in');
+			freeTiny.style.display = 'none';
+		},
+		setup : function(ed) {
+			ed.on("change", function(e){
+				$('#description').html(tinymce.activeEditor.getContent());
+			});
+			ed.on("keyup", function(){
+				$('#description').html(tinymce.activeEditor.getContent());
+			})
+		}
 	});
+	// tinyMCE.triggerSave();
+	// tinyMCE.activeEditor.execCommand('mceSave');
+	
+
 	$("#image").change(function() {
 			readURL(this);
+		});
+		$("#image_header").change(function() {
+			readURLHeader(this);
 		});
 	// CREATE
 	function readURL(input) {
@@ -177,6 +226,15 @@
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				jQuery('#image-src').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	function readURLHeader(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				jQuery('#image-src-header').attr('src', e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
@@ -194,6 +252,9 @@
 		data.append('select_content_or_blog', $('#select_content_or_blog').val());
 		data.append('service', $('#service').val());
 		data.append('post_date', $('#post_date').val());
+		data.append('post_author', $('#post_author').val());
+		data.append('short_description', $('#short_description').val());
+		data.append('image_header', jQuery('#image_header')[0].files[0]);
 		
 		
 		// data.append('links', $('#customelink').val());
