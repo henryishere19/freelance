@@ -72,7 +72,7 @@
 								<th class="min-w-80px">Image</th>
 								<th class="min-w-200px">Title</th>
 								<th class="min-w-80px">Created at</th>
-								<th class="min-w-80px">Category</th>
+								<th class="min-w-80px">Service</th>
 								<th class="min-w-80px">Status</th>
 								<th class="min-w-80px text-end">Actions</th>
 							</tr>
@@ -123,7 +123,7 @@
 				{data: 'image', name: 'image'},
 				{data: 'title', name: 'title'},
 				{data: 'created_at', name: 'created_at'},
-				{data: 'category', name: 'category'},
+				{data: 'service_name', name: 'service_name'},
 				{data: 'status', name: 'status'},
 				{data: 'action', name: 'action', orderable: false, searchable: false},
 			]

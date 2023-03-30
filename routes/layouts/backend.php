@@ -209,10 +209,18 @@ Route::group(['middleware' => ['auth'],'prefix' => 'backend','namespace' => 'Bac
 	Route::post('delete-lifeatinsetive', [LifeatintuitiveController::class, 'destroy'])->name('ajax.delete.lifeatinsetive');
 
 	//casestudy
-	Route::resource('casestudy', '\App\Http\Controllers\Backend\CasestudyController');
-	Route::post('store/casestudy', [CasestudyController::class, 'store'])->name('ajax.store.casestudy');
-	Route::post('casestudy', [CasestudyController::class, 'ajax_list'])->name('ajax.casestudy.list');
-	Route::post('delete-casestudy', [CasestudyController::class, 'destroy'])->name('ajax.delete.casestudy');
+	// Route::resource('casestudy', '\App\Http\Controllers\Backend\CasestudyController');
+	// Route::post('store/casestudy', [CasestudyController::class, 'store'])->name('admin.casestudy.store');
+	// Route::post('delete-casestudy', [CasestudyController::class, 'destroy'])->name('ajax.delete.casestudy');
+	Route::group(['prefix' => 'casestudy'], function() {
+		Route::post('ajax', [CasestudyController::class, 'ajax_list'])->name('admin.casestudy.list');
+		Route::get('list', [CasestudyController::class, 'index'])->name('admin.casestudy.index');
+		Route::get('add', [CasestudyController::class, 'create'])->name('admin.casestudy.add');
+		Route::post('store', [CasestudyController::class, 'store'])->name('admin.casestudy.store');
+		Route::post('delete', [CasestudyController::class, 'destroy'])->name('admin.casestudy.delete');
+		Route::get('edit/{id}', [CasestudyController::class, 'edit'])->name('admin.casestudy.edit');
+		Route::post('update', [CasestudyController::class, 'update'])->name('admin.casestudy.update');
+	});
 
 	//FAQs
 	Route::resource('faqs', '\App\Http\Controllers\Backend\FaqController');

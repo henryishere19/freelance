@@ -29,46 +29,35 @@ class CasestudyController extends CommonController
 	{
  		$this->middleware('auth');
 	}
-  
-	// Company LIST
+  	
 	public function index(){
 		$page 		= 'Casestudy';
 		$page_title = "Casestudy";
 		return view('backend.casestudy.list',compact('page','page_title'));
 	}
 
-	// CREATE
 	public function create(){
-		
-		$user = Auth()->user();
-		if(empty($user)){
-			$this->sendUnauthorizedError([], trans('common.invalid_user'));
-		}
-		
-		$data = Casestudy::create(['title'=> '']);
-		if($data){
-			return redirect()->route('casestudy.edit',$data->id);
-		}
-		return redirect()->route('casestudy.index');
+		$service = Service::where('status','active')->get();
+		return view('backend.casestudy.create',[
+			'services' => $service
+		]);
 	}
 	
-	// EDIT
 	public function edit($id = null){
 		$page 		= 'Casestudy';
-		$page_title = "Casestudy";
-		
-		
+		$page_title = "Casestudy";	
 		$user = Auth()->user();
 		if(empty($user)){
 			$this->sendUnauthorizedError([], trans('common.invalid_user'));
 		}
 		$data = Casestudy::find($id);
-		$service = Service::where('status','active')->get();
+		$services = Service::where('status','active')->get();
 		if($data){
-			return view('backend.casestudy.edit',compact('page','page_title', 'data','service'));
+			return view('backend.casestudy.edit',compact('page','page_title', 'data','services'));
 		}
-		return redirect()->route('casestudy.index');
+		return redirect()->route('admin.casestudy.index');
 	}
+	
 	public function ajax_list(Request $request){
 		$page     = $request->page ?? '1';
 		$count    = $request->count ?? '20';
@@ -78,15 +67,9 @@ class CasestudyController extends CommonController
 		$start  = $count * ($page - 1);
 		
 		$user = Auth()->user();
-		if(empty($user)){
-			$this->ajaxError([], trans('common.invalid_user'));
-		}
-		
 		try{
-			
 			if ($request->ajax()) {
-				$query = Casestudy::query();
-				
+				// $query = Casestudy::query();
 				// Filters
 				if($request->status != 'all'){
 					//$query->where(['status' => $request->status]);
@@ -94,7 +77,7 @@ class CasestudyController extends CommonController
 				if($request->search){
 					//$query->where('title','like','%'.$request->search.'%');
 				}
-				$data  = $query->get();
+				$data  =  Casestudy::select(DB::raw('*, (SELECT home_page_title FROM service WHERE id = casestudy.services_id) as service_name'))->get();
 				return DataTables::of($data)
 						->addIndexColumn()
 						->addColumn('image', function($row){
@@ -104,7 +87,7 @@ class CasestudyController extends CommonController
 					 	})
 						->addColumn('action', function($row){
 							   return '<div class="d-flex justify-content-end flex-shrink-0">
-												<a href="'. route("casestudy.edit",$row->id) .'" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"><i class="fa fa-eye"></i></a>
+												<a href="'. route("admin.casestudy.edit",$row->id) .'" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"><i class="fa fa-pen"></i></a>
 												<a href="javascript:void(0);" onclick="deleteThis('. $row->id .')" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"><i class="fa fa-trash"></i></a>
 											</div>';
 						})->rawColumns(['action'])
@@ -136,98 +119,115 @@ class CasestudyController extends CommonController
 			$this->ajaxError([], $e->getMessage());
 		}
 	}
-	// STORE
+	
 	public function store(Request $request){
-		$validator = Validator::make($request->all(), [
+		$validationRule = [
 			'title'       		=> 'required|min:3|max:99',
 			'status'			=> 'required',
-			'type'				=>'required',
-			'page_for'			=>'required'
-		]);
+			'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:1024',
+			'select_content_or_blog' => 'required',
+			'service' => 'required'
+		];
+		if($request->select_content_or_blog == 'file'){
+			$validationRule['fileupload'] = 'required|mimes:pdf,xlx,csv|max:2048';
+		}
+		$validator = Validator::make($request->all(), $validationRule);
 		if($validator->fails()){
 			$this->ajaxValidationError($validator->errors(), trans('common.error'));
-		}
-		
-		$user = Auth()->user();
- 		if(empty($user)){
-			$this->sendUnauthorizedError([], trans('common.invalid_user'));
-		}
-		
-		if($request->item_id){
-			$validator = Validator::make($request->all(), [
-				'item_id' => 'required',
-			]);
-			if($validator->fails()){
-				$this->ajaxValidationError($validator->errors(), trans('common.error'));
-			}
-		}
-		DB::beginTransaction();
+		}		
 		try{
-			if($request->link)
-			{
-				$link = $request->link;
-			}
-			elseif($request->links)
-			{
-				$link = $request->links;
-			}
-			else{
-				$link = "";
-			}
 			$data = [
 				'title'			=> $request->title,
-				'type'			=> $request->type,
-				'link'			=> $link,
-				'description'   => $request->description,
-				'page_for'		=>$request->page_for,
+				'description'   => $request->description??"",
 				'status'			=> $request->status,
+				'image' => $this->saveMedia($request->file('image')),
+				'show_content' => $request->select_content_or_blog,
+				'services_id' => $request->service,
+				'post_date' => $request->post_date??null,
+				'user_id' => Auth::user()->id
 			];
-			if(!empty($request->image) && $request->image != 'undefined'){
-				$validator = Validator::make($request->all(), [
-					'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:1024',
-				]);
-				if($validator->fails()){
-					$this->ajaxValidationError($validator->errors(), trans('common.error'));
-				}
-				$data['image'] = $this->saveMedia($request->file('image'));
-			}
-			if(!empty($request->fileupload) && $request->fileupload != 'undefined'){
+			
+			if($data['show_content'] == 'file' && $request->fileupload != 'undefined'){
 				$validator = Validator::make($request->all(), [
 					'fileupload' => 'required|mimes:pdf,xlx,csv|max:2048',
 				]);
 				if($validator->fails()){
 					$this->ajaxValidationError($validator->errors(), trans('common.error'));
 				}
-				$fileName = time().'.'.$request->fileupload->extension();  
-        		$request->file->move(public_path('casestudy'), $fileName);
+				$fileName = str_shuffle(md5(time())).'.'.$request->fileupload->extension();  
+        		$request->fileupload->move(public_path('casestudy'), $fileName);
 				$data['file'] = $fileName;
+			}else if($request->description !== null && $request->description != 'undefined'){
+				$data['description'] = $request->description;
+			}else{
+				$this->ajaxError([], 'Please fill description');
 			}
+			Casestudy::create($data);
+			$this->sendResponse([], trans('Casestudy Added Successfully'));
+		} catch (Exception $e) {
+			$this->ajaxError([], $e->getMessage());
+		}
+	}
 
-			if($request->item_id){
-				// UPDATE
-				$product = Casestudy::find($request->item_id);
-				
-				$product->fill($data);
-				$return = $product->save();
-				
-				if($return){
-					DB::commit();
-					$this->sendResponse([], trans('Casestudy updated Successfully'));
-				}
+	// STORE
+	public function update(Request $request){
+		$validationRule = [
+			'title'       		=> 'required|min:3|max:99',
+			'status'			=> 'required',
+			'select_content_or_blog' => 'required',
+			'service' => 'required',
+			'item_id' => 'required'
+		];
+		if($request->select_content_or_blog == 'file' && $request->fileupload != 'undefined'){
+			$validationRule['fileupload'] = 'required|mimes:pdf,xlx,csv|max:2048';
+		}
+		$validator = Validator::make($request->all(), $validationRule);
+		if($validator->fails()){
+			$this->ajaxValidationError($validator->errors(), trans('common.error'));
+		}		
+		try{
 
-			} else{
-				// CREATE
-				$return = Casestudy::create($data);
-				if($return){
-					DB::commit();
-					$this->sendResponse([], trans('Casestudy Added Successfully'));
-				}
+			$getData = Casestudy::find($request->item_id);
+			if(empty($getData)){
+				$this->ajaxError([],'Something went wrong');
+			}
+			$data = [
+				'title'			=> $request->title,
+				'description'   => $request->description??"",
+				'status'			=> $request->status,
+				'show_content' => $request->select_content_or_blog,
+				'services_id' => $request->service,
+				'post_date' => $request->post_date??null,
+				'user_id' => Auth::user()->id
+			];
+
+			if($request->image != 'undefined'){
+				$data['image'] =  $this->saveMedia($request->file('image'));
 			}
 			
-			DB::rollback();
-			$this->ajaxError([], trans('common.try_again'));
+			// dd($request->fileupload);
+			if($data['show_content'] == 'file' && $request->fileupload != 'undefined'){
+				$validator = Validator::make($request->all(), [
+					'fileupload' => 'required|mimes:pdf,xlx,csv|max:2048',
+				]);
+				if($validator->fails()){
+					$this->ajaxValidationError($validator->errors(), trans('common.error'));
+				}
+				$fileName = str_shuffle(md5(time())).'.'.$request->fileupload->extension();  
+        		$request->fileupload->move(public_path('casestudy'), $fileName);
+				$data['file'] = $fileName;
+				$data['description'] = null;
+			}else if($data['show_content'] == 'blog' && $request->description !== null && $request->description !== 'undefined'){
+				$data['description'] = $request->description;
+				$data['file'] = null;
+			}else if($data['show_content'] == 'blog' || $data['show_content'] == 'file' && $getData->file == null){ 
+				// $this->ajaxError([], 'Please enter description or select file',422);
+				return $this->ajaxError([],'Please fill description');
+			}
+
+			Casestudy::where('id',$request->item_id)->update($data);
+			$this->sendResponse([], trans('Casestudy Updated Successfully'));
 		} catch (Exception $e) {
-			DB::rollback();
 			$this->ajaxError([], $e->getMessage());
 		}
 	}

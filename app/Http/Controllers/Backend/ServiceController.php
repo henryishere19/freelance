@@ -88,10 +88,12 @@ class ServiceController extends CommonController
 									</div>';
 					})
 					->addColumn('image', function($row){
-						   $image = asset(config('constants.DEFAULT_PRODUCT_IMAGE'));
-						   if($row->image){ $image = asset($row->image); }
+						   $image = ($row->image) ?  $image = asset('service-img/'.$row->image) : asset(config('constants.DEFAULT_PRODUCT_IMAGE')); 
 						   return '<img data-id="'.$row->id.'" src="'. $image .'" height="50px" width="50px" class="idus">';
 					})
+					->editColumn('created_at', function($row){
+						return date('d M Y h:i A',strtotime($row->created_at));
+					 })
 					->addIndexColumn()
 					->editColumn('status', function($row){
 						if($row->status == 'active'){

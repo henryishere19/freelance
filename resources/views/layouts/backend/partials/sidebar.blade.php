@@ -117,7 +117,7 @@
 				</div>
 				<!-- casestudy -->
 				<div class="menu-item">
-					<a class="menu-link" href="{{ route('casestudy.index') }}">
+					<a class="menu-link" href="{{ route('admin.casestudy.index') }}">
 						<span class="menu-icon"><i class="fa fa-building"></i></span>
 						<span class="menu-title">Case Study</span>
 					</a>

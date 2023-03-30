@@ -7,7 +7,7 @@
 				<h1 class="d-flex text-dark fw-bolder fs-3 align-items-center my-1">Case Study</h1>
 			</div>
 			<div class="d-flex align-items-center gap-2 gap-lg-3">
-				<a href="{{ route('casestudy.create') }}" class="btn btn-sm btn-primary">Create</a>
+				<a href="{{ route('admin.casestudy.add') }}" class="btn btn-sm btn-primary">Create</a>
 			</div>
 		</div>
 	</div>
@@ -47,7 +47,7 @@
 			processing: true,
 			serverSide: true,
 			ajax: {
-				url: "{{route('ajax.casestudy.list')}}",
+				url: "{{route('admin.casestudy.list')}}",
 				method: "POST",
 				"data" : {
 					"_token": "{{ csrf_token() }}",
@@ -58,7 +58,7 @@
 				
 				{data: 'image', name: 'image'},
 				{data: 'title', name: 'title'},
-				{data: 'page_for', name: 'page_for'},
+				{data: 'service_name', name: 'service_name'},
 				{data: 'action', name: 'action', orderable: false, searchable: false},
 			]
 		});
@@ -69,7 +69,7 @@
 		if(confirm("{{trans('common.delete_confirm')}}")){
 			var data = new FormData();
 			data.append('item_id', item_id);
-			var response = adminAjax('{{route("ajax.delete.casestudy")}}', data);
+			var response = adminAjax('{{route("admin.casestudy.delete")}}', data);
 			if(response.status == '200'){
 				location.reload();
 			}else if(response.status == '201'){

@@ -53,7 +53,7 @@ trait CommonHelper
 		if(empty($file)){ return; }
 		
 		$upload_directory 	= $this->get_upload_directory($folder);
-		$name 				= md5($file->getClientOriginalName() . time() . rand());
+		$name 				= str_shuffle(md5($file->getClientOriginalName() . time() . rand()));
 		// $extension 			= $file->getClientOriginalExtension();
         $extension          = $file->guessExtension();
 		$fullname 			= $name . '.' . $extension;

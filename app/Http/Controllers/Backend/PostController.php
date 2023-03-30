@@ -69,7 +69,7 @@ class PostController extends CommonController
 	// AJAX LIST
 	public function ajax_list(Request $request){
 		try{
-			$query = Post::where('post_type', "blog");
+			$query = Post::select(DB::raw('*,(SELECT slug FROM service WHERE id = posts.services_id) as service_name'))->where('post_type', "blog");
 			
 			// SEARCH
 			// if($request->search){
@@ -98,7 +98,11 @@ class PostController extends CommonController
 							}
 						return implode(',',$arra);
 				 	})
-					->editColumn('status', function($row){
+					 
+					 ->editColumn('created_at', function($row){
+						return date('d M Y h:i A',strtotime($row->created_at));
+					 })
+					 ->editColumn('status', function($row){
 						if($row->status == 'active'){
 							return '<select class="form-control change_status" id="'.$row->id.'"><option value="active" selected>Active</option><option value="draft">Draft</option><option value="inactive">Inactive</option></select>';
 						}

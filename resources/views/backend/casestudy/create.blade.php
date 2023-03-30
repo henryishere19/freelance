@@ -32,7 +32,7 @@
 										<span class="required">Title</span>
 										<i class="fas fa-exclamation-circle ms-1 fs-7" data-bs-toggle="tooltip" title="Enter the title here."></i>
 									</label>
-									<input type="text" class="form-control form-control-solid" id="title" value="{{$data->title}}"/>
+									<input type="text" class="form-control form-control-solid" id="title" value=""/>
 									<div class="validation-div" id="val-title"></div>
 								</div>
 							</div>
@@ -42,8 +42,8 @@
 							<div class="col-md-6">
 								<label class="form-label">Select Showing Content</label>
 								<select class="form-select mb-2" id="select_content_or_blog" data-control="select2" data-placeholder="Select an option" data-allow-clear="true">
-									<option value="blog" @if($data->show_content == 'blog') selected="" @endif>Editor</option>
-									<option value="file" @if($data->show_content == 'file') selected="" @endif>File</option>
+									<option value="blog">Editor</option>
+									<option value="file">File</option>
 								</select>
 							</div>
 							@if(!empty($services))
@@ -51,7 +51,7 @@
 									<label class="form-label">Service</label>
 									<select class="form-select mb-2" id="service" data-control="select2" data-placeholder="Select an option" data-allow-clear="true">
 										@foreach($services as $key => $val)
-											<option @if($data->services_id == $val->id) selected="" @endif value="{{$val->id}}">{{$val->slug}}</option>
+											<option value="{{$val->id}}">{{$val->slug}}</option>
 										@endforeach
 									</select>
 									<!-- <div class="text-muted fs-7">Set a description for better visibility.</div> -->
@@ -63,7 +63,7 @@
 							<div class="col-md-12">
 								<div class="position-relative form-group">
 									<label for="description" class="">Description</label>
-									<textarea id="description"  rows="4" class="form-control">{{$data->description}}</textarea>
+									<textarea id="description"  rows="4" class="form-control"></textarea>
 									<div class="validation-div" id="val-description"></div>
 								</div>
 							</div>
@@ -85,7 +85,7 @@
 									<div class="card-header" style="padding: 0px;">
 										<div class="card-title"><h2> Images</h2></div>
 										<input type="file" id="image" class="form-control">
-										<img id="image-src" src="{{asset($data->image)}}" height="120"width="120px">
+										<img id="image-src" src="" height="120"width="120px">
 										<div class="validation-div" id="val-image"></div>
 									</div>
 								</div>
@@ -94,7 +94,7 @@
 								<div class="card card-flush py-4">
 									<div class="card-header" style="padding: 0px;">
 										<div class="card-title"><h2> Post Date</h2></div>
-										<input type="date" value="{{$data->post_date}}" id="post_date" class="form-control">
+										<input type="date" id="post_date" class="form-control">
 									</div>
 								</div>
 							</div>
@@ -106,8 +106,8 @@
 									<div class="w-100">
 										<div class="form-floating border rounded">
 											<select id="status" class="form-select form-select-solid lh-1 py-3">
-												<option value="active" @if($data->status == 'active') selected @endif>{{trans('common.active')}}</option>
-												<option value="inactive" @if($data->status == 'inactive') selected @endif>{{trans('common.inactive')}}</option>
+												<option value="active" >{{trans('common.active')}}</option>
+												<option value="inactive">{{trans('common.inactive')}}</option>
 											</select>
 											<div class="validation-div" id="val-status"></div>
 										</div>
@@ -183,7 +183,7 @@
 	}
 	function saveData(){
 		var data = new FormData();
-		data.append('item_id', '{{$data->id}}');
+		data.append('item_id', '');
 		data.append('title', $('#title').val());
 		// data.append('type', $('#pageselect option:selected').val());
 		// data.append('link', $('#pageselectss option:selected').val());
@@ -198,7 +198,7 @@
 		
 		// data.append('links', $('#customelink').val());
 		data.append('status', $('#status').val());
-		var response = adminAjax('{{route("admin.casestudy.update")}}', data);
+		var response = adminAjax('{{route("admin.casestudy.store")}}', data);
 		if(response.status == '200'){
 			swal.fire({ type: 'success', title: response.message, showConfirmButton: false, timer: 1500 });
 			setTimeout(function(){ window.location.replace("{{route('admin.casestudy.index')}}") }, 2000);
@@ -235,7 +235,7 @@
 	// Save File
 	function saveFile(){
 		var data = new FormData();
-		data.append('item_id', '{{$data->id}}');
+		data.append('item_id', '');
 		data.append('file', file);
 		var response = adminAjax('{{route("ajax.product.save.gallery")}}', data);
 		if(response.status == '200'){
@@ -247,16 +247,7 @@
 			swal.fire({title: response.message,type: 'error'});
 		}
 	}
-
-	
-		if('{{$data->show_content}}' == "file"){
-			$('.pdfDiv').show();
-			$('.blogDiv').hide();
-		}else{
-			$('.blogDiv').show();
-			$('.pdfDiv').hide();
-		}
-	
+	$('.pdfDiv').hide();
 	$('#select_content_or_blog').on('load change select',function(){
 		if($(this).val() == "file"){
 			$('.pdfDiv').show();
