@@ -106,14 +106,17 @@ class BlogController extends CommonController
 			$page_title = "Service Detail";
 			$page_main_title = $data->page_title;
 			
-			$blog = Post::where(['status'=>"active"])
-					// ->whereIn('services_id',function($query){
-					// 	$query->select('id')
-					// 	->from('service')
-					// 	->whereRaw('service.id = posts.services_id');
-					// })
+			$caseStudy = Casestudy::where(['status'=>"active"])
 					->where('services_id',$data->id)
-					->inRandomOrder()->limit(5)->get();
+					->limit(5)->orderBy('id','DESC')->get()->toArray();
+			$blog = Post::where(['status'=>"active"])
+			// ->whereIn('services_id',function($query){
+			// 	$query->select('id')
+			// 	->from('service')
+			// 	->whereRaw('service.id = posts.services_id');
+			// })
+			->where('services_id',$data->id)
+			->inRandomOrder()->limit(5)->get();
 
 			if($slug == "digital-workspace")
 			{
@@ -122,76 +125,76 @@ class BlogController extends CommonController
 				$page_description = $data->meta_description;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
 				$seo_keywords = $data->seo_keywords;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
-				return view('theme.serviceone', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
+				return view('theme.serviceone', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "cloud-native")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				//$blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				return view('theme.servicetwo', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				return view('theme.servicetwo', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "cloud-security-and-grc")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				return view('theme.servicethree', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				return view('theme.servicethree', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "ai-ml-solutions")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				return view('theme.servicenine', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				return view('theme.servicenine', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "data-ops")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				return view('theme.serviceseven', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				return view('theme.serviceseven', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "hybrid-cloud")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				return view('theme.servicefive', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				return view('theme.servicefive', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "cloud-infrastructure-engineering")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				 return view('theme.servicesix', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				 return view('theme.servicesix', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "cloud-finops")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				 return view('theme.serviceeight', compact(['page','page_title','blog','page_main_title','page_description','seo_keywords','casestudy','data']));
+				 return view('theme.serviceeight', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','seo_keywords','data']));
 			}
 			elseif($slug == "life-at")
 			{
 				$page_title = $data->meta_title;
-				$casestudy = Casestudy::where('page_for',$slug)->get();
+				//$casestudy = Casestudy::where('page_for',$slug)->get();
 				$page_description = $data->meta_description;
 				$seo_keywords = $data->seo_keywords;
 				$slider = Slider::where(['slug'=>"Category",'status'=>"active"])->first();
@@ -207,7 +210,7 @@ class BlogController extends CommonController
 					$slide2 = Slide::where('slider_id',$slider2->id)->get();
 				}
 				// $blog = Post::where(['status'=>"active"])->inRandomOrder()->limit(5)->get();
-				return view('theme.lifeat', compact(['page','page_title','blog','page_main_title','page_description','slider2','slide2','slider','slide','seo_keywords','casestudy','data']));
+				return view('theme.lifeat', compact(['caseStudy','page','page_title','blog','page_main_title','page_description','slider2','slide2','slider','slide','seo_keywords','data']));
 			}
 			
 			

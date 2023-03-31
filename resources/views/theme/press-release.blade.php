@@ -44,6 +44,7 @@
 				<div class="col-lg-4 col-md-6 col-12 d-flex align-items-stretch mb-4 press-release-main-box" data-aos="zoom-in" data-aos-delay="100">
 					<div class="press-release-box d-flex align-items-center justify-content-center">
 					<a href="{{$pe->link}}" target="_blank">
+						<h2>{{$pe->title}}</h2>
 						<img src="{{asset($pe->image)}}" class="img-fluid">
 					</a>
 					</div>

@@ -305,31 +305,85 @@
 	</div>
 
 	<div class="intuitive-insights-slider">
-	  @if($blog)
-		  @foreach($blog as $b)
-		  <div class="intuitive-insights-main-box">
+		@php
+			$caseStudyCountry = 0; 
+		@endphp
+		@if(!empty($blog))
+			@foreach($blog as $k => $b)
+				<div class="intuitive-insights-main-box">
 
-		    <div class="intuitive-insights-content">
-		<p class="date">By {{$b->author}} / @if(isset($b->post_date) && $b->post_date != "") {{ \Carbon\Carbon::createFromTimestamp(strtotime($b->post_date))->format('M d,Y')}}@else {{ \Carbon\Carbon::createFromTimestamp(strtotime($b->created_at))->format('M d,Y')}} @endif</p>
-		      <!-- <p class="date">23 Oct,2021</p> -->
+					<div class="intuitive-insights-content">
+						<p class="date">By {{$b->author}} / @if(isset($b->post_date) && $b->post_date != "") {{ \Carbon\Carbon::createFromTimestamp(strtotime($b->post_date))->format('M d,Y')}}@else {{ \Carbon\Carbon::createFromTimestamp(strtotime($b->created_at))->format('M d,Y')}} @endif</p>
+					<!-- <p class="date">23 Oct,2021</p> -->
 
-		      <h4 class="intuitive-insights-title mb-3">{{$b->title}}</h4>
+					<h4 class="intuitive-insights-title mb-3">{{$b->title}}</h4>
 
-		      <p class="intuitive-insights-info">{!! $b->short_description !!}</p>
+					<p class="intuitive-insights-info">{!! $b->short_description !!}</p>
 
-		      <div class="intuitive-insights-img mb-3 d-flex align-items-center">
+					<div class="intuitive-insights-img mb-3 d-flex align-items-center">
 
-		        <img src="{{asset('img/Home/arrow-button.png')}}" class="img-fluid">
+						<img src="{{asset('img/Home/arrow-button.png')}}" class="img-fluid">
 
-		        <a href="{{route('blog.details', ['slug' => $b->slug])}}" class="requste-button">Read More</a>
+						<a href="{{route('blog.details', ['slug' => $b->slug])}}" class="requste-button">Read More</a>
 
-		      </div>
+					</div>
 
-		    </div>
+					</div>
 
-		  </div>
-		  @endforeach
-		  @endif
+				</div>
+				@if(($k+1) % 2 == 0 && isset($caseStudy[$caseStudyCountry])){
+					<div class="intuitive-insights-main-box">
+						<div class="intuitive-insights-content">
+							<p class="date">By {{$caseStudy[$caseStudyCountry]['post_author']}} / @if(isset($caseStudy[$caseStudyCountry]['post_date']) && $caseStudy[$caseStudyCountry]['post_date'] != "") {{ \Carbon\Carbon::createFromTimestamp(strtotime($caseStudy[$caseStudyCountry]['post_date']))->format('M d,Y')}}@else {{ \Carbon\Carbon::createFromTimestamp(strtotime($caseStudy[$caseStudyCountry]['created_at']))->format('M d,Y')}} @endif</p>
+						<!-- <p class="date">23 Oct,2021</p> -->
+							<h4 class="intuitive-insights-title mb-3">{{$caseStudy[$caseStudyCountry]['title']}}</h4>
+							<p class="intuitive-insights-info">{!! $caseStudy[$caseStudyCountry]['short_description'] !!}</p>
+							<div class="intuitive-insights-img mb-3 d-flex align-items-center">
+								<img src="{{asset('img/Home/arrow-button.png')}}" class="img-fluid">
+								<a href="{{route('blog.details', ['slug' => $caseStudy[$caseStudyCountry]['id']])}}" class="requste-button">Read More</a>
+							</div>
+						</div>
+					</div>
+					@php $caseStudyCountry++; @endphp
+				@endif
+				
+			@endforeach
+		@else
+			@foreach($caseStudy as $caseStudyKey => $caseStudyValue)
+				<div class="intuitive-insights-main-box">
+
+					<div class="intuitive-insights-content">
+						<p class="date">By {{$caseStudyValue['post_author']}} / @if(isset($caseStudyValue['post_date']) && $caseStudyValue['post_date'] != "") {{ \Carbon\Carbon::createFromTimestamp(strtotime($caseStudyValue['post_date']))->format('M d,Y')}}@else {{ \Carbon\Carbon::createFromTimestamp(strtotime($caseStudyValue['created_at']))->format('M d,Y')}} @endif</p>
+					<!-- <p class="date">23 Oct,2021</p> -->
+
+					<h4 class="intuitive-insights-title mb-3">{{$caseStudyValue['title']}}</h4>
+
+					<p class="intuitive-insights-info">{!! $caseStudyValue['short_description'] !!}</p>
+
+					<div class="intuitive-insights-img mb-3 d-flex align-items-center">
+						<img src="{{asset('img/Home/arrow-button.png')}}" class="img-fluid">
+						<a href="{{route('blog.details', ['slug' => $caseStudyValue['id']])}}" class="requste-button">Read More</a>
+					</div>
+					</div>
+				</div>
+			@endforeach
+		@endif
+		@if(count($caseStudy) > $caseStudyCountry)
+			@for($caseStudyCountry;$caseStudyCountry < count($caseStudy);$caseStudyCountry++)
+				<div class="intuitive-insights-main-box">
+					<div class="intuitive-insights-content">
+						<p class="date">By {{$caseStudy[$caseStudyCountry]['post_author']}} / @if(isset($caseStudy[$caseStudyCountry]['post_date']) && $caseStudy[$caseStudyCountry]['post_date'] != "") {{ \Carbon\Carbon::createFromTimestamp(strtotime($caseStudy[$caseStudyCountry]['post_date']))->format('M d,Y')}}@else {{ \Carbon\Carbon::createFromTimestamp(strtotime($caseStudy[$caseStudyCountry]['created_at']))->format('M d,Y')}} @endif</p>
+					<!-- <p class="date">23 Oct,2021</p> -->
+						<h4 class="intuitive-insights-title mb-3">{{$caseStudy[$caseStudyCountry]['title']}}</h4>
+						<p class="intuitive-insights-info">{!! $caseStudy[$caseStudyCountry]['short_description'] !!}</p>
+						<div class="intuitive-insights-img mb-3 d-flex align-items-center">
+							<img src="{{asset('img/Home/arrow-button.png')}}" class="img-fluid">
+							<a href="{{route('blog.details', ['slug' => $caseStudy[$caseStudyCountry]['id']])}}" class="requste-button">Read More</a>
+						</div>
+					</div>
+				</div>
+			@endfor
+		@endif
 	</div>
   </div> 
 </section>
